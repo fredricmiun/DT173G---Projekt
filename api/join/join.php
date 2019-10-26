@@ -100,7 +100,7 @@ Om den finns så generar vi helt enkelt en ny, så fortsätter det till dess att
 
 Detta ökar säkerheten istället för att köra auto_increment på id som också är sessions-nyckeln för användaren.
 
-Därav generate_key() ovanför när vi skickar data till klassen -> databasen
+Därav generate_key() ovanför när vi skickar data till klassen -> databasen.
 
 */
 
