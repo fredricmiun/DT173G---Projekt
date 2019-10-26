@@ -33,45 +33,47 @@ $input = json_decode(file_get_contents('php://input'),true);
                 $data['content'] = "Fyll i alla fält";
             } else {
                 $check = new Join();
-                /* Check if username is taken */ 
+                /* Kontrollera användarnamn */ 
                 if($check->check_user($username)) {
                     $data['response'] = "error";
                     $data['content'] = "Användarnamn upptaget";
                 } 
+                /* Användarnamn behöver vara minst tre tecken */
                 else if (strlen($username)<3) {
                     $data['response'] = "error";
                     $data['content'] = "Användarnamn behöver vara minst tre tecken";
                 }
+                /* EJ längre än 32 tecken */
                 else if (strlen($username)>32) {
                     $data['response'] = "error";
                     $data['content'] = "Användarnamn får inte vara längre än 32 tecken";
                 }
-                /* Only allow letters and digits for username */
+                /* Får bara innehålla bokstäver eller siffror */
                 else if (!ctype_alnum($username)) {
                     $data['response'] = "error";
                     $data['content'] = "Användarnamn får bara innehålla bokstäver och siffror";
                 }  
-                /* Check if email is taken */ 
+                /* Kontrollera mailadress i databasen */ 
                 else if ($check->check_email($email)) {
                     $data['response'] = "error";
                     $data['content'] = "E-mail är upptagen";
                 }
-                /* Check if email isn't too long */
+                /* Kolla så att mailen inte är ofantligt lång. 128 är standard maxlängd för emails. */
                 else if (strlen($email)>128) {
                     $data['response'] = "error";
                     $data['content'] = "E-mail måste vara kortare än 128 tecken";
                 }
-                /* Check if mail is really valid */
+                /* kontrollera med phps egen metod för om mailen är giltig */
                 else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $data['response'] = "error";
                     $data['content'] = "E-mail okänd";
                 } 
-                /* Check if password is strong enough */ 
+                /* minst 8 tecken för lösenordet */ 
                 else if (strlen($password)<8) {
                     $data['response'] = "error";
                     $data['content'] = "Lösenordet måste vara minst 8 tecken";
                 } 
-                /* Check if passwords match*/ 
+                /* Kontrollera så att lösenorden matchar */ 
                 else if ($password != $password_confirm) {
                     $data['response'] = "error";
                     $data['content'] = "Lösenordet matchar inte";
@@ -88,6 +90,20 @@ $input = json_decode(file_get_contents('php://input'),true);
     }
     
     echo json_encode($data);
+
+
+/* 
+
+Delen skapar en random key rand(10000000,99999999); som kontrollerar nyckeln mot databasen.
+Finns den inte så fortsätter vi med den genererade nyckeln. 
+Om den finns så generar vi helt enkelt en ny, så fortsätter det till dess att vi får en nyckel som inte är tagen.
+
+Detta ökar säkerheten istället för att köra auto_increment på id som också är sessions-nyckeln för användaren.
+
+Därav generate_key() ovanför när vi skickar data till klassen -> databasen
+
+*/
+
 
 function check_key($string) {
     $init_key = new Join;  
