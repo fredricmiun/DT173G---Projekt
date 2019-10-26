@@ -22,9 +22,9 @@ REST API - Webbtjänst
 
 2.  Controller & View
 
-    Två filer - CvController.php & CvView.php
+    - Två filer - CvController.php & CvView.php
 
-    Dessa två filer har hand om frågor till klassen och tar även hand om svaret som genereras. Svaret är antingen ett "rått" svar eller så behandlas svaret i en av view-funktionerna i CvView-filen.
+    - Dessa två filer har hand om frågor till klassen och tar även hand om svaret som genereras. Svaret är antingen ett "rått" svar eller så behandlas svaret i en av view-funktionerna i CvView-filen.
 
 3.  API-katalogen
 
@@ -32,6 +32,6 @@ REST API - Webbtjänst
 
 4.  Övrigt
 
-    Config-filen innehåller variabler, autoloader, ob_start() samt session_start();
+    - Config-filen innehåller variabler, autoloader, ob_start() samt session_start();
 
-    Funktions-filen icon.php innehåller en funktion som returnerar en svg-bild. Detta för att svg-grafik ofta har lång syntax, så genom att placera de i funktioner kan vi kalla på dem och hålla ursprungsfilen städad. Argument finns i funktionen för att bestämma storlek & färg.
+    - Funktions-filen icon.php innehåller en funktion som returnerar en svg-bild. Detta för att svg-grafik ofta har lång syntax, så genom att placera de i funktioner kan vi kalla på dem och hålla ursprungsfilen städad. Argument finns i funktionen för att bestämma storlek & färg.
